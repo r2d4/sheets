@@ -1,0 +1,9 @@
+language: go
+os: linux
+
+go:
+  - "1.10.x"
+go_import_path: github.com/r2d4/sh8s
+
+script:
+  - make test
