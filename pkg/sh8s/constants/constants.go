@@ -19,5 +19,9 @@ package constants
 import "github.com/sirupsen/logrus"
 
 const (
+	// DefaultLogLevel is the log level set if -v is not specified
 	DefaultLogLevel = logrus.WarnLevel
+
+	// ImageName is the name of the docker image that contains this binary
+	ImageName = "gcr.io/r2d4minikube/excel"
 )

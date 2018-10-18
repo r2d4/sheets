@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sh8s
+  labels:
+    app: sh8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sh8s
+  template:
+    metadata:
+      labels:
+        app: sh8s
+    spec:
+      containers:
+      - name: sh8s
+        image: sh8s
+        ports:
+        - containerPort: 8000
