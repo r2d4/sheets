@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: sh8s
-        image: sh8s
+        image: gcr.io/r2d4minikube/sh8s
         ports:
-        - containerPort: 8000
+        - containerPort: 8080

@@ -16,12 +16,26 @@ limitations under the License.
 
 package constants
 
-import "github.com/sirupsen/logrus"
+import (
+	"fmt"
+
+	"github.com/sirupsen/logrus"
+)
 
 const (
 	// DefaultLogLevel is the log level set if -v is not specified
-	DefaultLogLevel = logrus.WarnLevel
+	DefaultLogLevel = logrus.InfoLevel
+
+	// DefaultPort is the port that the server will run on
+	DefaultPort = 8080
+
+	// DefaultAddress is the default address to serve on
+	DefaultAddress = "127.0.0.1"
 
 	// ImageName is the name of the docker image that contains this binary
 	ImageName = "gcr.io/r2d4minikube/excel"
+)
+
+var (
+	DefaultPortAndAddress = fmt.Sprintf("%s:%d", DefaultAddress, DefaultPort)
 )

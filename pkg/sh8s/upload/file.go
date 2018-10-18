@@ -11,14 +11,11 @@ import (
 )
 
 func UploadFileHandler(w http.ResponseWriter, r *http.Request) (int, error) {
-	var b []byte
-	if _, err := r.Body.Read(b); err != nil {
-		return http.StatusInternalServerError, errors.Wrap(err, "reading request")
-	}
-	defer r.Body.Close()
+	decoder := json.NewDecoder(r.Body)
+
 	var req *api.UploadFileRequest
-	if err := json.Unmarshal(b, &req); err != nil {
-		return http.StatusBadRequest, errors.Wrap(err, "unmarshaling uploadCellRequest")
+	if err := decoder.Decode(&req); err != nil {
+		return http.StatusBadRequest, errors.Wrap(err, "unmarshaling upload run request")
 	}
 	resp, err := UploadFile(req)
 	if err != nil {

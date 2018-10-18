@@ -11,14 +11,11 @@ import (
 )
 
 func UploadEnvHandler(w http.ResponseWriter, r *http.Request) (int, error) {
-	var b []byte
-	if _, err := r.Body.Read(b); err != nil {
-		return http.StatusInternalServerError, errors.Wrap(err, "reading request")
-	}
-	defer r.Body.Close()
+	decoder := json.NewDecoder(r.Body)
+
 	var req *api.UploadEnvironmentRequest
-	if err := json.Unmarshal(b, &req); err != nil {
-		return http.StatusBadRequest, errors.Wrap(err, "unmarshaling uploadCellRequest")
+	if err := decoder.Decode(&req); err != nil {
+		return http.StatusBadRequest, errors.Wrap(err, "unmarshaling upload run request")
 	}
 	resp, err := UploadEnvironment(req)
 	if err != nil {
@@ -36,7 +33,7 @@ func UploadEnvHandler(w http.ResponseWriter, r *http.Request) (int, error) {
 
 func UploadEnvironment(req *api.UploadEnvironmentRequest) (*api.UploadCellResponse, error) {
 	key := fmt.Sprintf("environment:%s", req.ID)
-	if err := datastore.DefaultDatastore.SetList(id, req.Range); err != nil {
+	if err := datastore.DefaultDatastore.SetList(req.ID, req.Range); err != nil {
 		return nil, errors.Wrap(err, "setting list")
 	}
 	return &api.UploadCellResponse{

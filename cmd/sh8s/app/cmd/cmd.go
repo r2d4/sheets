@@ -38,12 +38,14 @@ func NewRootCommand(out, err io.Writer) *cobra.Command {
 		if err := SetUpLogs(err, v); err != nil {
 			return err
 		}
+		rootCmd.SilenceUsage = true
 		logrus.Infof("%+v", version.Get())
 		return nil
 	}
 
 	rootCmd.AddCommand(NewCmdVersion(out))
-
+	rootCmd.AddCommand(NewCmdServe(out))
+	rootCmd.AddCommand(NewCmdClient(out))
 	rootCmd.PersistentFlags().StringVarP(&v, "verbosity", "v", constants.DefaultLogLevel.String(), "Log level (debug, info, warn, error, fatal, panic")
 	return rootCmd
 }
