@@ -21,5 +21,6 @@ type Datastore interface {
 var DefaultDatastore Datastore
 
 func init() {
-	DefaultDatastore = &redis.RedisStore{}
+	DefaultDatastore = &redis.RedisStore{Address: "redis:6379"}
+	DefaultDatastore.Register()
 }
