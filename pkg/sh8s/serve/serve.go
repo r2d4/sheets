@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/r2d4/sh8s/pkg/datastore"
 	"github.com/r2d4/sh8s/pkg/sh8s/constants"
 	"github.com/r2d4/sh8s/pkg/sh8s/runner"
 	"github.com/r2d4/sh8s/pkg/sh8s/upload"
@@ -27,7 +28,9 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Run(port int) error {
+func Run(dsAddr string, port int) error {
+	datastore.InitDatastore(dsAddr)
+
 	logrus.Infof("Serving on %s", constants.DefaultPortAndAddress)
 	http.HandleFunc("/upload/file", util.Handler(upload.UploadFileHandler))
 	http.HandleFunc("/upload/environment", util.Handler(upload.UploadEnvHandler))

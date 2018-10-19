@@ -52,5 +52,6 @@ func post(w io.Writer, route string, req interface{}) error {
 	}
 	fmt.Println(string(data))
 	io.Copy(w, resp.Body)
+	w.Write([]byte("\n"))
 	return resp.Body.Close()
 }

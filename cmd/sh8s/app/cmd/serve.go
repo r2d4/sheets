@@ -25,6 +25,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var addr string
+
 func NewCmdServe(out io.Writer) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "serve",
@@ -33,12 +35,12 @@ func NewCmdServe(out io.Writer) *cobra.Command {
 			return RunServe(out, cmd)
 		},
 	}
-
+	cmd.Flags().StringVarP(&addr, "address", "a", "", "Address of the datastore")
 	return cmd
 }
 
 func RunServe(out io.Writer, cmd *cobra.Command) error {
-	if err := serve.Run(constants.DefaultPort); err != nil {
+	if err := serve.Run(addr, constants.DefaultPort); err != nil {
 		return errors.Wrap(err, "running server")
 	}
 	return nil

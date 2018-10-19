@@ -19,8 +19,9 @@ type Datastore interface {
 
 // DefaultDatastore is where the files will be stored
 var DefaultDatastore Datastore
+var Address string
 
-func init() {
-	DefaultDatastore = &redis.RedisStore{Address: "redis:6379"}
+func InitDatastore(address string) {
+	DefaultDatastore = &redis.RedisStore{Address: address}
 	DefaultDatastore.Register()
 }

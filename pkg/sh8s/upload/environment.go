@@ -33,7 +33,7 @@ func UploadEnvHandler(w http.ResponseWriter, r *http.Request) (int, error) {
 
 func UploadEnvironment(req *api.UploadEnvironmentRequest) (*api.UploadCellResponse, error) {
 	key := fmt.Sprintf("environment:%s", req.ID)
-	if err := datastore.DefaultDatastore.SetList(req.ID, req.Range); err != nil {
+	if err := datastore.DefaultDatastore.SetList(key, req.Range); err != nil {
 		return nil, errors.Wrap(err, "setting list")
 	}
 	return &api.UploadCellResponse{

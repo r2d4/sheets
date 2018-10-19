@@ -1,6 +1,8 @@
 package redis
 
 import (
+	"fmt"
+
 	"github.com/pkg/errors"
 	"github.com/xyproto/simpleredis"
 )
@@ -24,6 +26,9 @@ func (r *RedisStore) Set(key, value string) error {
 
 func (r *RedisStore) SetList(id string, keys []string) error {
 	ls := simpleredis.NewList(r.conn, id)
+	if err := ls.Clear(); err != nil {
+		return errors.Wrap(err, "clearing list")
+	}
 	for _, k := range keys {
 		if err := ls.Add(k); err != nil {
 			return errors.Wrap(err, "adding to list")
@@ -34,10 +39,12 @@ func (r *RedisStore) SetList(id string, keys []string) error {
 
 func (r *RedisStore) List(id string) (map[string]string, error) {
 	ls := simpleredis.NewList(r.conn, id)
+	fmt.Println(ls)
 	keys, err := ls.All()
 	if err != nil {
 		return nil, errors.Wrap(err, "getting list keys")
 	}
+	fmt.Println(keys)
 	kvs := simpleredis.NewKeyValue(r.conn, "0")
 	m := map[string]string{}
 	for _, k := range keys {

@@ -3,6 +3,9 @@ kind: Config
 build:
   artifacts:
   - image: gcr.io/r2d4minikube/sh8s
+  - image: gcr.io/r2d4minikube/redis
+    docker:
+      dockerfile: hack/Dockerfile.redis
 deploy:
   kubectl:
     manifests:

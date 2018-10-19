@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/r2d4/sh8s/cmd/sh8s/app/cmd/client"
+	"github.com/r2d4/sh8s/pkg/datastore"
 	"github.com/spf13/cobra"
 )
 
@@ -29,9 +30,12 @@ func NewCmdClient(out io.Writer) *cobra.Command {
 		Short: "A client to help test the server",
 	}
 
+	datastore.InitDatastore("127.0.0.1:6379")
+
 	cmd.AddCommand(client.NewCmdUploadFile(out))
 	cmd.AddCommand(client.NewCmdUploadEnv(out))
 	cmd.AddCommand(client.NewCmdRun(out))
+	cmd.AddCommand(client.NewCmdMount(out))
 
 	return cmd
 }

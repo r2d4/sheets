@@ -27,7 +27,7 @@ const (
 	DefaultLogLevel = logrus.InfoLevel
 
 	// DefaultPort is the port that the server will run on
-	DefaultPort = 8080
+	DefaultPort = 9000
 
 	// DefaultAddress is the default address to serve on
 	DefaultAddress = "127.0.0.1"

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: redis
+        image: gcr.io/r2d4minikube/redis
         ports:
         - containerPort: 6379
 ---
@@ -27,7 +27,7 @@ metadata:
   labels:
     app: redis
 spec:
-  type: ClusterIP
+  clusterIP: None
   ports:
     - port: 6379
       name: redis
